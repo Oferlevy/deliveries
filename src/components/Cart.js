@@ -3,7 +3,6 @@ import { useCart } from '@/contexts/CartContext';
 import { useState } from 'react';
 
 import CartItem from '@/components/CartItem';
-import Modal from '@/components/Modal';
 
 export default function Cart() {
     const { cart } = useCart();

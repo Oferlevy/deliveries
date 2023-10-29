@@ -7,7 +7,6 @@ import Cart from '@/components/Cart';
 import ItemDescription from '@/components/ItemDescription';
 import MenuLayout from '@/components/MenuLayout';
 import { useCart } from '@/contexts/CartContext';
-import Modal from '@/components/Modal';
 
 export default function MenuPage({ menu }) {
     const { cart } = useCart();
