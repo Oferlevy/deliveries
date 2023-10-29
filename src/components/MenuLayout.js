@@ -40,22 +40,13 @@ export default function MenuLayout({ day, sections, children }) {
         window.addEventListener('scroll', handleScroll, { passive: true });
     }, [headerOffset]);
 
-    useEffect(() => {
-        if (!activeSection) return;
-
-        const section = document.getElementById(
-            'section-link-' + activeSection
-        );
-        section.focus();
-    }, [activeSection]);
-
     return (
         <div className='flex flex-col h-full'>
             <h3
                 id='menu-title'
                 className='pt-4 text-xl text-center font-medium'
             >
-                תפריט - יום {'ראשון'}
+                תפריט - יום {day}
             </h3>
 
             <ul
@@ -70,7 +61,11 @@ export default function MenuLayout({ day, sections, children }) {
                             id={'section-link-' + name}
                             href={'#' + name}
                             offset={headerOffset}
-                            className='rounded-full outline-none px-3 py-2 text-ms font-medium hover:text-[#8b5cf6] hover:focus:bg-[#8b5cf630] focus:bg-[#8b5cf620] focus:text-[#8b5cf6]'
+                            className={`rounded-full outline-none px-3 py-2 text-ms font-medium ${
+                                name === activeSection
+                                    ? 'hover:bg-[#8b5cf630] bg-[#8b5cf620] text-[#8b5cf6]'
+                                    : 'hover:text-[#8b5cf6]'
+                            }  `}
                         >
                             {name}
                         </AnchorLink>
