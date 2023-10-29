@@ -1,0 +1,88 @@
+import { createContext, useReducer, useContext } from 'react';
+
+// state managment via context
+const CartContext = createContext();
+
+// adds item to the cart
+const addItem = (newCart, action) => {
+    // finding the index of the item with the correspondong id
+    const index = newCart.items.findIndex(
+        (cartItem) => cartItem.id === action.item.id
+    );
+
+    // to avoid bugs - if 'addItem' from some reason called more than once
+    if (index === -1) newCart.items.push(action.item);
+};
+
+// changes the quantity of an item in the cart
+const setQuantity = (newCart, action) => {
+    // finding the index of the item with the correspondong id
+    const index = newCart.items.findIndex(
+        (cartItem) => cartItem.id === action.id
+    );
+
+    // DEVELPOPMENT only
+    if (index === -1) {
+        return;
+    }
+
+    // updating the quantity of the item
+    newCart.items[index].quantity = action.newQuantity;
+
+    // removing from the cart if the new quantity is 0
+    if (action.newQuantity === 0) {
+        newCart.items.splice(index, 1);
+    }
+};
+
+// the reducer of the cart
+const cartReducer = (state, action) => {
+    const newCart = { ...state };
+
+    switch (action.type) {
+        case 'addItem':
+            addItem(newCart, action);
+            break;
+        case 'setQuantity':
+            setQuantity(newCart, action);
+            break;
+        default:
+            return state;
+    }
+
+    // calculate new price
+    newCart.price = newCart.items.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+    );
+
+    return newCart;
+};
+
+// the cart context provider
+const CartProvider = ({ children }) => {
+    // cart object: { items[], price }
+    const [cart, dispatch] = useReducer(cartReducer, {
+        items: [],
+        price: 0,
+    });
+
+    return (
+        <CartContext.Provider value={{ cart, dispatch }}>
+            {children}
+        </CartContext.Provider>
+    );
+};
+
+// a hook to check the context is used within the corresponding context provider
+const useCart = () => {
+    const context = useContext(CartContext);
+
+    if (!context) {
+        throw new Error('useCart must be used within a CartProvider');
+    }
+
+    return context;
+};
+
+export { CartProvider, useCart };
