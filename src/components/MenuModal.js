@@ -1,6 +1,12 @@
+import { useEffect } from 'react';
 import { IoMdClose } from 'react-icons/io';
 
 export default function MenuModal({ children, isOpen, close }) {
+    // disables scroll when modal is open
+    useEffect(() => {
+        document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+    }, [isOpen]);
+
     return (
         <div
             aria-hidden={!isOpen}
