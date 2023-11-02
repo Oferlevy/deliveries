@@ -32,8 +32,11 @@ export default function Cart() {
                         <p className='text-ms font-medium mb-[0.125rem]'>
                             הוסף הערות למנה
                         </p>
-                        <span className='text-right text-xs text-gray-500'>
-                            {message || '...סכו״ם, רטבים, וכו'}
+                        <span
+                            dir='rtl'
+                            className='text-right text-xs text-gray-500'
+                        >
+                            {message || 'סכו״ם, רטבים, וכו...'}
                         </span>
                     </div>
 
@@ -84,8 +87,9 @@ export default function Cart() {
 
                     <div className='mt-3'>
                         <textarea
-                            placeholder=' ...סכו״ם, רטבים, וכו'
+                            placeholder='סכו״ם, רטבים, וכו...'
                             rows={4}
+                            dir='rtl'
                             onChange={(event) => setMessage(event.target.value)}
                             className='text-right w-full
                          p-2.5 resize-none outline-none text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 hover:ring-blue-500 hover:ring-1 hover:border-blue-500
