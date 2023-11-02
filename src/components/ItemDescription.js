@@ -10,12 +10,30 @@ export default function ItemDescription({
     price,
     image,
     id,
+    halves,
     close,
 }) {
     const [quantity, setQuantity] = useState(1);
     const [inOrder, setInOrder] = useState(false);
 
     const { cart, dispatch } = useCart();
+
+    const changeQuantity = (change) => {
+        switch (change) {
+            case 'add':
+                if (quantity === 0) setQuantity(1);
+                else setQuantity(quantity + (halves ? 0.5 : 1));
+                break;
+            case 'subtract':
+                if (quantity === 1) setQuantity(0);
+                else setQuantity(quantity - (halves ? 0.5 : 1));
+                break;
+            default:
+                throw new Error(
+                    "Invalid changeQuantity commad: use either 'add' or 'subtract'"
+                );
+        }
+    };
 
     useEffect(() => {
         if (id == null) return;
@@ -44,6 +62,7 @@ export default function ItemDescription({
                     image,
                     description,
                     name,
+                    halves,
                 },
             });
     };
@@ -73,7 +92,7 @@ export default function ItemDescription({
                 <div className='flex mr-2 border rounded-md overflow-hidden shadow'>
                     <button
                         disabled={inOrder ? quantity === 0 : quantity === 1}
-                        onClick={() => setQuantity(quantity - 1)}
+                        onClick={() => changeQuantity('subtract')}
                         className={`flex items-center justify-center px-3 ${
                             (inOrder ? quantity === 0 : quantity === 1)
                                 ? 'bg-slate-100 text-gray-500'
@@ -86,7 +105,7 @@ export default function ItemDescription({
                         {quantity}
                     </span>
                     <button
-                        onClick={() => setQuantity(quantity + 1)}
+                        onClick={() => changeQuantity('add')}
                         className='flex items-center justify-center px-3 bg-gray-200 hover:bg-gray-300 transition'
                     >
                         <GrAdd size={14} />

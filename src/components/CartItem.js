@@ -10,10 +10,27 @@ export default function CartItem({
     image,
     id,
     quantity,
+    halves,
 }) {
     const { dispatch } = useCart();
 
-    const setQuantity = (newQuantity) => {
+    const changeQuantity = (change) => {
+        let newQuantity = 0;
+
+        switch (change) {
+            case 'add':
+                newQuantity = quantity + (halves ? 0.5 : 1);
+                break;
+            case 'subtract':
+                if (quantity === 1) newQuantity = 0;
+                else newQuantity = quantity - (halves ? 0.5 : 1);
+                break;
+            default:
+                throw new Error(
+                    "Invalid changeQuantity commad: use either 'add' or 'subtract'"
+                );
+        }
+
         dispatch({ type: 'setQuantity', id, newQuantity });
     };
 
@@ -43,16 +60,16 @@ export default function CartItem({
 
                     <div className='flex mt-1 mb-0.5 text-center border rounded-md overflow-hidden h-6 shadow'>
                         <button
-                            onClick={() => setQuantity(quantity - 1)}
+                            onClick={() => changeQuantity('subtract')}
                             className='flex items-center justify-center w-6 bg-gray-200 hover:bg-gray-300 transition'
                         >
                             <BiMinus size={14} />
                         </button>
-                        <span className='flex justify-center items-center w-6 text-sm text-[#8b5cf6] font-medium'>
+                        <span className='flex justify-center items-center w-7 text-sm text-[#8b5cf6] font-medium'>
                             {quantity}
                         </span>
                         <button
-                            onClick={() => setQuantity(quantity + 1)}
+                            onClick={() => changeQuantity('add')}
                             className='flex items-center justify-center w-6 bg-gray-200 hover:bg-gray-300 transition'
                         >
                             <GrAdd size={14} />

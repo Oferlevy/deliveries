@@ -10,6 +10,11 @@ const menuSectionSchema = new mongoose.Schema({
         default: [],
         required: true,
     },
+    halves: {
+        type: Boolean,
+        default: false,
+        required: true,
+    },
 });
 
 const MenuSection =

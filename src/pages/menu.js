@@ -46,17 +46,6 @@ export default function MenuPage({ menu }) {
                 )}
             </div>
 
-            {/* <Modal isOpen={showCart} close={() => setShowCart(false)}>
-                <Cart />
-            </Modal>
-
-            <Modal
-                isOpen={itemToShow !== null}
-                close={() => setItemToShow(null)}
-            >
-                <ItemDescription />
-            </Modal> */}
-
             <MenuModal isOpen={showCart} close={() => setShowCart(false)}>
                 <Cart />
             </MenuModal>
