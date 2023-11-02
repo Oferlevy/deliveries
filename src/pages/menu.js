@@ -76,5 +76,8 @@ export async function getStaticProps() {
         menu.sections[1].items[0],
     ];
 
-    return { props: { menu } };
+    return {
+        props: { menu },
+        revalidate: 30,
+    };
 }
