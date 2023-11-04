@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
 const menuSchema = new mongoose.Schema({
-    day: {
-        type: String,
-        required: true,
-    },
     sections: {
         type: [{ type: mongoose.Types.ObjectId, ref: 'MenuSection' }],
         default: [],

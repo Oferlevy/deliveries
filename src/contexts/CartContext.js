@@ -46,6 +46,9 @@ const cartReducer = (state, action) => {
         case 'setQuantity':
             setQuantity(newCart, action);
             break;
+        case 'setMessage':
+            newCart.message = action.message;
+            break;
         default:
             return state;
     }
@@ -61,10 +64,11 @@ const cartReducer = (state, action) => {
 
 // the cart context provider
 const CartProvider = ({ children }) => {
-    // cart object: { items[], price }
+    // cart object: { items[], price, message }
     const [cart, dispatch] = useReducer(cartReducer, {
         items: [],
         price: 0,
+        message: '',
     });
 
     return (

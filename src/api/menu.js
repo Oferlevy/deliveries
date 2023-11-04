@@ -1,12 +1,16 @@
+import connectDB from './mongoHandler';
+
 import Menu from '@/api/models/menu';
+import Today from '@/api/models/today';
 import MenuItem from '@/api/models/menuItem';
 import MenuSection from '@/api/models/menuSection';
-import connect from '@/api/mongoHandler';
 
 export async function getMenu() {
-    await connect();
+    await connectDB();
 
-    const menu = await Menu.findOne({})
+    const today = await Today.findOne().lean();
+
+    const menu = await Menu.findById(today.menu)
         .populate({
             path: 'sections',
             select: '-_id -__v',
@@ -29,6 +33,7 @@ export async function getMenu() {
         .lean();
 
     menu.sections = menu.sections.filter((section) => section.items);
+    menu.day = today.day;
 
     return menu;
 }

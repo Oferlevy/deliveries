@@ -3,7 +3,7 @@ import { getMenu } from '@/api/menu';
 
 import MenuModal from '@/components/MenuModal';
 import MenuSection from '@/components/MenuSection';
-import Cart from '@/components/Cart';
+import Cart from '@/components/cart/Cart';
 import ItemDescription from '@/components/ItemDescription';
 import MenuLayout from '@/components/MenuLayout';
 import { useCart } from '@/contexts/CartContext';
@@ -56,8 +56,8 @@ export default function MenuPage({ menu }) {
             >
                 <ItemDescription
                     {...itemToShow}
+                    isOpen={itemToShow !== null}
                     close={() => setItemToShow(null)}
-                    // setPrice={setPrice}
                 />
             </MenuModal>
         </MenuLayout>
@@ -76,8 +76,5 @@ export async function getStaticProps() {
         menu.sections[1].items[0],
     ];
 
-    return {
-        props: { menu },
-        revalidate: 30,
-    };
+    return { props: { menu } };
 }

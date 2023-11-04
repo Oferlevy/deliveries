@@ -11,6 +11,7 @@ export default function ItemDescription({
     image,
     id,
     halves,
+    isOpen,
     close,
 }) {
     const [quantity, setQuantity] = useState(1);
@@ -66,6 +67,8 @@ export default function ItemDescription({
                 },
             });
     };
+
+    if (!isOpen) return;
 
     return (
         <div className='w-full bg-white'>
