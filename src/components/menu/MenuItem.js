@@ -15,11 +15,13 @@ export default function MenuItem({ name, description, price, image }) {
                 </div>
 
                 <div className='flex flex-col flex-1 text-right pl-1 overflow-hidden'>
-                    <p className='text-sm font-semibold pt-1'>{name}</p>
-                    <p className='flex-1 text-gray-500 text-sm truncate'>
+                    <p className='text-sm font-semibold py-1'>{name}</p>
+                    <p className='flex-1 text-gray-500 text-xs'>
                         {description}
                     </p>
-                    <p className='text-[#8b5cf6] text-sm pb-1'>{price} ₪</p>
+                    {price >= 0 && (
+                        <p className='text-[#8b5cf6] text-sm pb-1'>{price} ₪</p>
+                    )}
                 </div>
             </div>
         </div>

@@ -51,12 +51,12 @@ export default function MenuLayout({ day, sections, children }) {
 
             <ul
                 id='menu-header'
-                className={`sticky top-0 z-40 px-3 py-4 bg-white w-full text-right ${
+                className={`flex flex-row-reverse sticky top-0 z-40 p-3 bg-white ${
                     shadow ? 'shadow-lg' : ''
-                } transition-all ease-linear`}
+                } transition-all ease-linear whitespace-nowrap`}
             >
                 {sections.map(({ name }, index) => (
-                    <li key={index} className='inline'>
+                    <li key={index} className='inline-block'>
                         <AnchorLink
                             id={'section-link-' + name}
                             href={'#' + name}

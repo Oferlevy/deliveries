@@ -1,4 +1,4 @@
-import MenuItem from '@/components/MenuItem';
+import MenuItem from '@/components/menu/MenuItem';
 
 export default function MenuSection({ name, items, halves, setItemToShow }) {
     return (

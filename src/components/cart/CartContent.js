@@ -2,6 +2,7 @@ import { MdOutlineComment } from 'react-icons/md';
 import { useCart } from '@/contexts/CartContext';
 
 import CartItem from '@/components/cart/CartItem';
+import CartPaymentNumber from './CartPaymentNumber';
 
 export default function CartContent({ message, isVisible, setCurrentView }) {
     const { cart } = useCart();
@@ -44,16 +45,18 @@ export default function CartContent({ message, isVisible, setCurrentView }) {
                 ))}
             </div>
 
-            <div className='absolute inset-x-3 bottom-3'>
-                <button
-                    onClick={() => setCurrentView('makeOrder')}
-                    className='flex justify-between bg-[#8b5cf6] w-full
+            {cart.items.length >= 1 && (
+                <div className='absolute inset-x-3 bottom-3'>
+                    <button
+                        onClick={() => setCurrentView('makeOrder')}
+                        className='flex justify-between bg-[#8b5cf6] w-full
                         py-3 px-4 mt-2 rounded-md shadow-lg text-white transition'
-                >
-                    <p>{cart.price} ₪</p>
-                    <p className='font-semibold'>הזמן</p>
-                </button>
-            </div>
+                    >
+                        <p>{cart.price} ₪</p>
+                        <p className='font-semibold'>הזמן</p>
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

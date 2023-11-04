@@ -18,6 +18,7 @@ const menuItemSchema = new mongoose.Schema({
         default: '',
         required: false,
     },
+    maxQuantity: Number,
 });
 
 const MenuItem =

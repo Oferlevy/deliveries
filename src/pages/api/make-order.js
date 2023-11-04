@@ -9,15 +9,24 @@ function formatMessage(req) {
     const data = {
         name: req.body.name,
         phoneNumber: req.body.phoneNumber,
+        paymentMethod: req.body.paymentMethod,
         ...cart,
     };
+
+    if (req.body.number) {
+        cart.number = req.body.number;
+    }
 
     const message = data.message === '' ? '\n' : `הערות: ${data.message}\n\n`;
     const items = data.items
         .map((item) => `${item.name} - ${item.quantity}`)
         .join('\n');
 
-    return `free trial\n\n${data.name}\nמספר טלפון: ${data.phoneNumber}\n\n${data.price} ש״ח\n${message}${items}`;
+    return `free trial\n\n${data.name}\nמספר טלפון: ${data.phoneNumber}\n\n${
+        data.price
+    } ש״ח\nשיטת תשלום: ${data.paymentMethod}\n${
+        cart.number ? `מספר: ${cart.number}\n` : ''
+    }${message}${items}`;
 }
 
 export default async function handler(req, res) {

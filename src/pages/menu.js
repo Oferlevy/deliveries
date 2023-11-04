@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { getMenu } from '@/api/menu';
 
 import MenuModal from '@/components/MenuModal';
-import MenuSection from '@/components/MenuSection';
+import MenuSection from '@/components/menu/MenuSection';
 import Cart from '@/components/cart/Cart';
-import ItemDescription from '@/components/ItemDescription';
-import MenuLayout from '@/components/MenuLayout';
+import ItemDescription from '@/components/menu/ItemDescription';
+import MenuLayout from '@/components/menu/MenuLayout';
 import { useCart } from '@/contexts/CartContext';
 
 export default function MenuPage({ menu }) {
@@ -33,8 +33,8 @@ export default function MenuPage({ menu }) {
                     ))}
                 </ul>
 
-                {price > 0 && (
-                    <div className='fixed inset-x-3 bottom-3 rounded-md overflow-hidden'>
+                {cart.items.length >= 1 && (
+                    <div className='sticky mx-3 bottom-3 rounded-md overflow-hidden'>
                         <button
                             onClick={() => setShowCart(true)}
                             className='flex justify-between py-3 px-4 w-full bg-[#8b5cf6] text-white'
@@ -66,15 +66,6 @@ export default function MenuPage({ menu }) {
 
 export async function getStaticProps() {
     const menu = await getMenu();
-
-    menu.sections[1].items = [
-        menu.sections[1].items[0],
-        menu.sections[1].items[1],
-        menu.sections[1].items[0],
-        menu.sections[1].items[0],
-        menu.sections[1].items[0],
-        menu.sections[1].items[0],
-    ];
 
     return { props: { menu } };
 }

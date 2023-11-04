@@ -25,6 +25,7 @@ export async function getMenu() {
                         price: 1,
                         image: 1,
                         description: 1,
+                        maxQuantity: 1,
                     },
                 },
             },

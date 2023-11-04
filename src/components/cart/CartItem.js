@@ -10,6 +10,7 @@ export default function CartItem({
     image,
     id,
     quantity,
+    maxQuantity,
     halves,
 }) {
     const { dispatch } = useCart();
@@ -35,7 +36,7 @@ export default function CartItem({
     };
 
     return (
-        <div className='flex justify-between h-[6.25rem] py-2 shadow-theme overflow-hidden'>
+        <div className='flex justify-between h-[6.25rem] py-2 overflow-hidden'>
             <div className='w-32 relative rounded-lg overflow-hidden'>
                 <Image
                     src={image}
@@ -69,8 +70,9 @@ export default function CartItem({
                             {quantity}
                         </span>
                         <button
+                            disabled={quantity === maxQuantity}
                             onClick={() => changeQuantity('add')}
-                            className='flex items-center justify-center w-6 bg-gray-200 hover:bg-gray-300 transition'
+                            className='flex items-center justify-center w-6 bg-gray-200 hover:bg-gray-300 disabled:bg-slate-100 transition'
                         >
                             <GrAdd size={14} />
                         </button>

@@ -1,10 +1,10 @@
 import { useCart } from '@/contexts/CartContext';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { IoMdArrowBack } from 'react-icons/io';
 
 export default function MakeOrder({ isVisible, setCurrentView }) {
     const { cart } = useCart();
+    const [showSetNumber, setShowSetNumber] = useState(false);
 
     return (
         <div
@@ -22,7 +22,7 @@ export default function MakeOrder({ isVisible, setCurrentView }) {
             <div className='flex flex-col text-right'>
                 <p className='mt-11 mb-4 text-lg font-medium self-end'>הזמן</p>
 
-                <form action='/api/make-order' method='POST'>
+                <form id='payment-form' action='/api/make-order' method='POST'>
                     <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-medium mb-2'>
                             שם מלא
@@ -32,11 +32,11 @@ export default function MakeOrder({ isVisible, setCurrentView }) {
                             dir='rtl'
                             required={true}
                             placeholder='שם מלא'
-                            className='border-b-2 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'
+                            className='border-b-2 w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'
                         />
                     </div>
 
-                    <div className='mb-6'>
+                    <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-medium mb-2'>
                             מספר טלפון
                         </label>
@@ -44,11 +44,50 @@ export default function MakeOrder({ isVisible, setCurrentView }) {
                             name='phoneNumber'
                             type='tel'
                             dir='rtl'
+                            minLength={9}
+                            maxLength={10}
                             required={true}
                             placeholder='מספר טלפון'
-                            className='border-b-2 rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline'
+                            className='border-b-2 w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline'
                         />
                     </div>
+
+                    <div className='mb-4'>
+                        <label className='block text-gray-700 text-sm font-medium mb-2'>
+                            אמצעי תשלום
+                        </label>
+                        <select
+                            name='paymentMethod'
+                            form='payment-form'
+                            dir='rtl'
+                            required={true}
+                            onChange={(event) =>
+                                setShowSetNumber(event.target.value === 'מספר')
+                            }
+                            className='px-3 py-2 w-full text-sm text-gray-700 bg-transparent border-b-2 appearance-none focus:outline-none focus:ring-0'
+                        >
+                            <option value='ביט'>ביט</option>
+                            <option value='מזומן'>מזומן</option>
+                            <option value='מספר'>מספר</option>
+                        </select>
+                    </div>
+
+                    {showSetNumber && (
+                        <div>
+                            <label className='block text-gray-700 text-sm font-medium mb-2'>
+                                מספר
+                            </label>
+                            <input
+                                name='number'
+                                type='number'
+                                maxLength={4}
+                                dir='rtl'
+                                required={true}
+                                placeholder='מספר'
+                                className='border-b-2 w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'
+                            />
+                        </div>
+                    )}
 
                     <input
                         type='hidden'

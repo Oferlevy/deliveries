@@ -9,6 +9,7 @@ export default function ItemDescription({
     description,
     price,
     image,
+    maxQuantity,
     id,
     halves,
     isOpen,
@@ -63,6 +64,7 @@ export default function ItemDescription({
                     image,
                     description,
                     name,
+                    maxQuantity,
                     halves,
                 },
             });
@@ -83,12 +85,8 @@ export default function ItemDescription({
 
             <div className='text-right px-3 py-4'>
                 <p className='text-xl font-semibold'>{name}</p>
-                <p className='text-[#8b5cf6] font-medium pt-2 pb-2'>
-                    {price} ₪
-                </p>
-                <p className='text-gray-500 bg-red-100 text-sm'>
-                    {description}
-                </p>
+                <p className='text-[#8b5cf6] font-medium py-2'>{price} ₪</p>
+                <p className='text-gray-500 text-xs'>{description}</p>
             </div>
 
             <div className='flex p-3'>
@@ -96,11 +94,9 @@ export default function ItemDescription({
                     <button
                         disabled={inOrder ? quantity === 0 : quantity === 1}
                         onClick={() => changeQuantity('subtract')}
-                        className={`flex items-center justify-center px-3 ${
-                            (inOrder ? quantity === 0 : quantity === 1)
-                                ? 'bg-slate-100 text-gray-500'
-                                : 'bg-gray-200 hover:bg-gray-300'
-                        }  transition`}
+                        className={
+                            'flex items-center justify-center px-3 bg-gray-200 hover:bg-gray-300 disabled:bg-slate-100 transition'
+                        }
                     >
                         <BiMinus size={14} />
                     </button>
@@ -108,8 +104,9 @@ export default function ItemDescription({
                         {quantity}
                     </span>
                     <button
+                        disabled={quantity === maxQuantity}
                         onClick={() => changeQuantity('add')}
-                        className='flex items-center justify-center px-3 bg-gray-200 hover:bg-gray-300 transition'
+                        className='flex items-center justify-center px-3 bg-gray-200 hover:bg-gray-300 disabled:bg-slate-100 transition'
                     >
                         <GrAdd size={14} />
                     </button>
@@ -122,9 +119,13 @@ export default function ItemDescription({
                     }}
                     className='flex justify-between p-3 w-ful bg-[#8b5cf6] flex-1 rounded-md shadow-lg text-white transition text-sm'
                 >
-                    <p>{quantity * price} ₪</p>
+                    <p>{quantity > 0 && `${quantity * price} ₪`}</p>
                     <p className='font-semibold '>
-                        {inOrder ? 'עדכן פריט' : 'הוסף להזמנה'}
+                        {inOrder
+                            ? quantity === 0
+                                ? 'מחק פריט'
+                                : 'עדכן פריט'
+                            : 'הוסף להזמנה'}
                     </p>
                 </button>
             </div>
