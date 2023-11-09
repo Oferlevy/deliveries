@@ -38,7 +38,7 @@ export default function EditMessage({ setMessage, isVisible, setCurrentView }) {
                     className='bg-[#8b5cf6] w-full
                         py-3 px-4 mt-2 rounded-md shadow-lg text-white font-semibold text-center transition'
                 >
-                    בוצע
+                    אישור
                 </button>
             </div>
         </div>

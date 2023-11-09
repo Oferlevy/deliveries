@@ -53,7 +53,7 @@ export default function CartContent({ message, isVisible, setCurrentView }) {
                         py-3 px-4 mt-2 rounded-md shadow-lg text-white transition'
                     >
                         <p>{cart.price} ₪</p>
-                        <p className='font-semibold'>הזמן</p>
+                        <p className='font-semibold'>המשך</p>
                     </button>
                 </div>
             )}

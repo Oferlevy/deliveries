@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getMenu } from '@/api/menu';
 
-import MenuModal from '@/components/MenuModal';
+import MenuModal from '@/components/menu/MenuModal';
 import MenuSection from '@/components/menu/MenuSection';
 import Cart from '@/components/cart/Cart';
 import ItemDescription from '@/components/menu/ItemDescription';
@@ -67,5 +67,7 @@ export default function MenuPage({ menu }) {
 export async function getStaticProps() {
     const menu = await getMenu();
 
-    return { props: { menu } };
+    return {
+        props: { menu },
+    };
 }

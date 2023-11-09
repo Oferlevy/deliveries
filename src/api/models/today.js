@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import '@/api/models/order';
 
 const todaySchema = new mongoose.Schema({
     day: {
@@ -12,6 +13,11 @@ const todaySchema = new mongoose.Schema({
     },
     pickupInfo: {
         type: String,
+    },
+    orders: {
+        type: [{ type: mongoose.Types.ObjectId, ref: 'Order' }],
+        default: [],
+        required: true,
     },
 });
 

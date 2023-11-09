@@ -1,7 +1,5 @@
-const client = require('twilio')(
-    process.env.TWILIO_ACCOUNT_SID,
-    process.env.TWILIO_AUTH_TOKEN
-);
+import Order from '@/api/models/order';
+import Today from '@/api/models/today';
 
 function formatMessage(req) {
     const cart = JSON.parse(req.body.cart);
@@ -35,14 +33,25 @@ export default async function handler(req, res) {
             error: 'Invalid HTTP method. Only POST requests are allowed.',
         });
 
-    client.messages
-        .create({
-            from: process.env.TWILIO_PHONE_NUMBER,
-            to: '+972539351838',
-            body: formatMessage(req),
-        })
-        .catch((err) => console.log(err));
+    const cart = JSON.parse(req.body.cart);
+    const items = cart.items.map((item) => `${item.name} - ${item.quantity}`);
 
-    const urlCart = new URLSearchParams(req.body.cart).toString().slice(0, -1);
-    res.redirect(302, '/confirmation?cart=' + urlCart);
+    const order = await Order.create({
+        name: req.body.name,
+        phoneNumber: req.body.phoneNumber,
+        price: cart.price,
+        paymentMethod: req.body.paymentMethod,
+        paymentNumber: req.body.number,
+        message: cart.message || undefined,
+        items,
+    });
+
+    await Today.findOneAndUpdate(
+        {},
+        {
+            $push: { orders: order },
+        }
+    );
+
+    res.redirect(302, '/confirmation');
 }

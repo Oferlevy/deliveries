@@ -4,7 +4,7 @@ import connectDB from '@/api/mongoHandler';
 export default async function getTodaysInfo() {
     await connectDB();
 
-    const today = Today.findOne().select('-_id -__v -menu').lean();
+    const today = Today.findOne().select('-_id -__v -menu -orders').lean();
 
     return today;
 }

@@ -2,7 +2,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useState } from 'react';
 import { IoMdArrowBack } from 'react-icons/io';
 
-export default function MakeOrder({ isVisible, setCurrentView }) {
+export default function PlaceOrder({ isVisible, setCurrentView }) {
     const { cart } = useCart();
     const [showSetNumber, setShowSetNumber] = useState(false);
 
@@ -22,7 +22,7 @@ export default function MakeOrder({ isVisible, setCurrentView }) {
             <div className='flex flex-col text-right'>
                 <p className='mt-11 mb-4 text-lg font-medium self-end'>הזמן</p>
 
-                <form id='payment-form' action='/api/make-order' method='POST'>
+                <form id='payment-form' action='/api/place-order' method='POST'>
                     <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-medium mb-2'>
                             שם מלא
@@ -102,7 +102,7 @@ export default function MakeOrder({ isVisible, setCurrentView }) {
                         py-3 px-4 mt-2 rounded-md shadow-lg text-white transition'
                         >
                             <p>{cart.price} ₪</p>
-                            <p className='font-semibold'>אישור</p>
+                            <p className='font-semibold'>הזמן</p>
                         </button>
                     </div>
                 </form>

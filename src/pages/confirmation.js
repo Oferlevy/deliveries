@@ -1,31 +1,24 @@
-import getTodaysInfo from '@/api/todaysInfo';
-import { useState, useEffect } from 'react';
+// import getTodaysInfo from '@/api/todaysInfo';
+import Link from 'next/link';
 
-export default function ConfirmationPage({ todaysInfo }) {
-    const [cart, setCart] = useState({});
-
-    useEffect(() => {
-        try {
-            const { cart: cartString } = Object.fromEntries(
-                new URLSearchParams(window.location.search)
-            );
-
-            setCart(JSON.parse(cartString));
-        } catch (err) {
-            console.log(err);
-        }
-    }, []);
-
+export default function ConfirmationPage() {
     return (
-        <>
-            <div>{JSON.stringify(todaysInfo)}</div>
-            <div>{JSON.stringify(cart)}</div>
-        </>
+        <div className='h-full flex flex-col items-center justify-center'>
+            <p className='text-xl font-medium mb-2'>!הזמנתך התקבלה בהצלחה</p>
+            <Link
+                href={'/menu'}
+                className='text-lg text-blue-500 hover:text-blue-600 transition-colors'
+            >
+                בחזרה לתפריט
+            </Link>
+        </div>
     );
 }
 
-export async function getStaticProps() {
-    const todaysInfo = await getTodaysInfo();
+// export async function getStaticProps() {
+//     const todaysInfo = await getTodaysInfo();
 
-    return { props: { todaysInfo } };
-}
+//     return {
+//         props: { todaysInfo },
+//     };
+// }

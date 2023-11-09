@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import CartContent from '@/components/cart/CartContent';
 import EditMessage from '@/components/cart/EditMessage';
-import MakeOrder from '@/components/cart/MakeOrder';
+import PlaceOrder from '@/components/cart/PlaceOrder';
 
 export default function Cart() {
     const { dispatch } = useCart();
@@ -30,7 +30,7 @@ export default function Cart() {
                 setCurrentView={setCurrentView}
             />
 
-            <MakeOrder
+            <PlaceOrder
                 isVisible={currentView === 'makeOrder'}
                 setCurrentView={setCurrentView}
             />
