@@ -4,13 +4,13 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 export default function MenuLayout({ day, sections, children }) {
     const [shadow, setShadow] = useState(false);
     const [activeSection, setActiveSection] = useState('');
-    const [titleOffset, setTitleOffset] = useState(0);
-    const [headerOffset, setHeaderOffset] = useState(0);
+    const [titleHeight, setTitleHeight] = useState(0);
+    const [navbarHeight, setNavbarHeight] = useState(0);
     const sectionsRef = useRef(null);
 
     const handleScroll = () => {
-        setShadow(window.scrollY > titleOffset);
-        const scrollY = window.scrollY + headerOffset;
+        setShadow(window.scrollY > titleHeight);
+        const scrollY = window.scrollY + navbarHeight;
 
         sectionsRef.current.forEach((section) => {
             const sectionOffsetTop = section.offsetTop;
@@ -26,8 +26,8 @@ export default function MenuLayout({ day, sections, children }) {
 
     useEffect(() => {
         sectionsRef.current = document.querySelectorAll('section');
-        setTitleOffset(document.getElementById('menu-title').offsetHeight);
-        setHeaderOffset(document.getElementById('menu-header').offsetHeight);
+        setTitleHeight(document.getElementById('menu-title').offsetHeight);
+        setNavbarHeight(document.getElementById('menu-header').offsetHeight);
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -35,13 +35,13 @@ export default function MenuLayout({ day, sections, children }) {
     }, []);
 
     useEffect(() => {
-        if (!headerOffset) return;
+        if (!navbarHeight) return;
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-    }, [headerOffset]);
+    }, [navbarHeight]);
 
     return (
-        <div className='flex flex-col h-full'>
+        <div className='flex flex-col'>
             <h3
                 id='menu-title'
                 className='pt-4 text-xl text-center font-medium'
@@ -51,7 +51,7 @@ export default function MenuLayout({ day, sections, children }) {
 
             <ul
                 id='menu-header'
-                className={`flex flex-row-reverse sticky top-0 z-40 p-3 bg-white ${
+                className={`flex flex-row-reverse sticky top-0 z-50 p-3 bg-white ${
                     shadow ? 'shadow-lg' : ''
                 } transition-all ease-linear whitespace-nowrap`}
             >
@@ -60,7 +60,7 @@ export default function MenuLayout({ day, sections, children }) {
                         <AnchorLink
                             id={'section-link-' + name}
                             href={'#' + name}
-                            offset={headerOffset}
+                            offset={navbarHeight}
                             className={`rounded-full outline-none px-3 py-2 text-ms font-medium ${
                                 name === activeSection
                                     ? 'hover:bg-[#8b5cf630] bg-[#8b5cf620] text-[#8b5cf6]'
