@@ -1,5 +1,6 @@
 import getOrders from '@/api/orders';
 import axios from 'axios';
+import withSsrAuth from '@/lib/withSsrAuth';
 
 export default function OrdersPage({ orders }) {
     const changeStatus = (status, id) => {
@@ -57,10 +58,10 @@ export default function OrdersPage({ orders }) {
     );
 }
 
-export async function getServerSideProps() {
+export const getServerSideProps = withSsrAuth(async () => {
     const orders = await getOrders();
 
     return {
         props: { orders },
     };
-}
+}, '/crew/orders');

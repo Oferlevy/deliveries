@@ -22,7 +22,11 @@ export default function PlaceOrder({ isVisible, setCurrentView }) {
             <div className='flex flex-col text-right'>
                 <p className='mt-11 mb-4 text-lg font-medium self-end'>הזמן</p>
 
-                <form id='payment-form' action='/api/place-order' method='POST'>
+                <form
+                    id='payment-form'
+                    action='/api/order/place-order'
+                    method='POST'
+                >
                     <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-medium mb-2'>
                             שם מלא
