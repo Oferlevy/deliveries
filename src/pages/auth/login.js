@@ -19,7 +19,7 @@ function LoginPage({ router }) {
             })
             .then(() => {
                 const redirect = router.query.redirect;
-                window.location.replace(redirect ?? '/menu');
+                window.location = redirect ?? '/menu';
             })
             .catch((err) => {
                 if (err.response?.status === 401) {
