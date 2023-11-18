@@ -1,9 +1,13 @@
 import mongoose from 'mongoose';
 
 const menuSchema = new mongoose.Schema({
-    sections: {
-        type: [{ type: mongoose.Types.ObjectId, ref: 'MenuSection' }],
+    items: {
+        type: [{ type: mongoose.Types.ObjectId, ref: 'MenuItem' }],
         default: [],
+        required: true,
+    },
+    sections: {
+        type: [String],
         required: true,
     },
 });

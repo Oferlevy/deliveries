@@ -13,11 +13,16 @@ const menuItemSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    description: {
+    section: {
         type: String,
-        default: '',
-        required: false,
+        required: true,
     },
+    halves: {
+        type: Boolean,
+        default: false,
+        required: true,
+    },
+    description: String,
     maxQuantity: Number,
 });
 

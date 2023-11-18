@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { CartProvider } from '@/contexts/CartContext';
 import '@/styles/globals.css';
 
 export default function App({ Component, pageProps }) {
@@ -12,9 +11,7 @@ export default function App({ Component, pageProps }) {
                 ></meta>
             </Head>
 
-            <CartProvider>
-                <Component {...pageProps} />
-            </CartProvider>
+            <Component {...pageProps} />
         </>
     );
 }

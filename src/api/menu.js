@@ -1,40 +1,41 @@
-import connectDB from './mongoHandler';
+import connectDB from '@/api/mongoHandler';
 
 import Menu from '@/api/models/menu';
 import Today from '@/api/models/today';
 import MenuItem from '@/api/models/menuItem';
-import MenuSection from '@/api/models/menuSection';
 
-export async function getMenu() {
+export default async function getMenu() {
     await connectDB();
 
     const today = await Today.findOne().lean();
 
-    const menu = await Menu.findById(today.menu)
+    const data = await Menu.findById(today.menu)
         .populate({
-            path: 'sections',
+            path: 'items',
             select: '-_id -__v',
-
-            populate: {
-                path: 'items',
-                select: '-_id -__v',
-                options: {
-                    projection: {
-                        id: { $toString: '$_id' },
-                        name: 1,
-                        price: 1,
-                        image: 1,
-                        description: 1,
-                        maxQuantity: 1,
-                    },
+            options: {
+                projection: {
+                    id: { $toString: '$_id' },
+                    name: 1,
+                    price: 1,
+                    image: 1,
+                    section: 1,
+                    halves: 1,
+                    description: 1,
+                    maxQuantity: 1,
                 },
             },
         })
         .select('-_id -__v')
         .lean();
 
-    menu.sections = menu.sections.filter((section) => section.items);
-    menu.day = today.day;
+    const menu = {
+        day: today.day,
+        sections: data.sections.map((section) => ({
+            name: section,
+            items: data.items.filter((item) => item.section === section),
+        })),
+    };
 
     return menu;
 }

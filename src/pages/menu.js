@@ -1,14 +1,22 @@
 import { useState, useEffect } from 'react';
-import { getMenu } from '@/api/menu';
+import getMenu from '@/api/menu';
 
 import MenuModal from '@/components/menu/MenuModal';
 import MenuSection from '@/components/menu/MenuSection';
 import Cart from '@/components/cart/Cart';
 import ItemDescription from '@/components/menu/ItemDescription';
 import MenuLayout from '@/components/menu/MenuLayout';
-import { useCart } from '@/contexts/CartContext';
+import { CartProvider, useCart } from '@/contexts/CartContext';
 
-export default function MenuPage({ menu }) {
+export default function ContextWrapper({ menu }) {
+    return (
+        <CartProvider>
+            <MenuPage menu={menu} />
+        </CartProvider>
+    );
+}
+
+function MenuPage({ menu }) {
     const { cart } = useCart();
 
     const [price, setPrice] = useState(0);

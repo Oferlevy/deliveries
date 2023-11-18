@@ -22,7 +22,7 @@ export default function MenuModal({ children, isOpen, close }) {
             />
 
             <div
-                className={`absolute mx-auto inset-x-0 bottom-0 rounded-t-2xl max-h-[95%] overflow-hidden shadow-xl xs:rounded-b-2xl xs:bottom-auto xs:max-w-md ${
+                className={`absolute mx-auto inset-x-0 bottom-0 rounded-t-2xl max-h-[95%] overflow-scroll shadow-xl xs:rounded-b-2xl xs:bottom-auto xs:max-w-md ${
                     isOpen ? '' : 'opacity-0 translate-y-full xs:translate-y-20'
                 } transition-all ease-in-out`}
             >
