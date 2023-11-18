@@ -8,9 +8,7 @@ export default function EditMenuItem({
     close,
     isNewItem,
 }) {
-    if (!isOpen) return;
-
-    const [newItem, setNewItem] = useState(initialItem);
+    const [newItem, setNewItem] = useState(initialItem || {});
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -39,6 +37,8 @@ export default function EditMenuItem({
         setNewItem(initialItem);
     }, [initialItem]);
 
+    if (!isOpen) return;
+
     return (
         <div className='p-4 pt-14 bg-white'>
             <form onSubmit={handleSubmit}>
@@ -53,7 +53,7 @@ export default function EditMenuItem({
                             dir='rtl'
                             required={true}
                             placeholder={'שם מנה'}
-                            value={newItem.name}
+                            value={newItem.name || ''}
                             onChange={(event) =>
                                 setNewItem({
                                     ...newItem,
@@ -93,7 +93,7 @@ export default function EditMenuItem({
                             type='text'
                             required={true}
                             placeholder='Image Path'
-                            value={newItem.image}
+                            value={newItem.image || ''}
                             onChange={(event) =>
                                 setNewItem({
                                     ...newItem,
@@ -117,7 +117,7 @@ export default function EditMenuItem({
                                 dir='rtl'
                                 required={true}
                                 placeholder='מחיר'
-                                value={newItem.price}
+                                value={newItem.price || ''}
                                 onChange={(event) =>
                                     setNewItem({
                                         ...newItem,
@@ -140,7 +140,7 @@ export default function EditMenuItem({
                                     בחר פריט מהרשימה
                                 </label>
                                 <select
-                                    value={newItem.name}
+                                    value={newItem.name || ''}
                                     onChange={(event) =>
                                         chooseFromList(
                                             JSON.parse(event.target.value),
