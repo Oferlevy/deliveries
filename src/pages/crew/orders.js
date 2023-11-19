@@ -50,6 +50,7 @@ export default function OrdersPage({ orders }) {
                             <option value='שולמה'>שולמה</option>
                             <option value='בהכנה'>בהכנה</option>
                             <option value='נמסרה'>נמסרה</option>
+                            <option value='מחק'>מחק</option>
                         </select>
                     </li>
                 ))}
@@ -60,6 +61,7 @@ export default function OrdersPage({ orders }) {
 
 export const getServerSideProps = withSsrAuth(async () => {
     const orders = await getOrders();
+    console.log(orders);
 
     return {
         props: { orders },

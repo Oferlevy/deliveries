@@ -1,4 +1,5 @@
 import Order from '@/api/models/order';
+import Today from '@/api/models/today';
 import connectDB from '@/api/mongoHandler';
 
 export default async function handler(req, res) {
@@ -9,7 +10,21 @@ export default async function handler(req, res) {
 
     try {
         await connectDB();
-        await Order.findByIdAndUpdate(req.body.id, { status: req.body.status });
+        const order = await Order.findByIdAndUpdate(req.body.id, {
+            status: req.body.status,
+        });
+
+        if (req.body.status === 'מחק') {
+            console.log(order._id);
+            await Today.findOneAndUpdate(
+                {},
+                {
+                    $pull: { orders: order._id.toString() },
+                }
+            );
+            await Order.deleteOne({ _id: order._id.toString() });
+        }
+
         return res.status(200).end();
     } catch (err) {
         return res.status(500).send(err);
