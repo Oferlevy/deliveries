@@ -38,11 +38,13 @@ export default function EditMenuPage({ initialMenu, allItems }) {
         };
 
         const menuItems = menu.sections.map((section) => section.items).flat(1);
+        const newItems = menuItems.filter((item) => item.id === undefined);
         const modifiedItems = menuItems.filter((item) => !includes(item));
 
         axios
             .post('/api/edit-menu', {
                 menu,
+                newItems,
                 modifiedItems,
             })
             .then((res) => console.log(res))

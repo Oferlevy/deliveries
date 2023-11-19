@@ -8,23 +8,25 @@ import { sessionOptions } from '@/lib/authSession';
 export default withIronSessionApiRoute(editMenuRoute, sessionOptions);
 
 async function editMenuRoute(req, res) {
-    const { menu, modifiedItems } = req.body;
-
-    console.log(modifiedItems);
-    console.log(menu);
+    const { menu, newItems, modifiedItems } = req.body;
 
     await connectDB();
     const today = await Today.findOne();
+
+    const data = await MenuItem.insertMany(newItems);
+    const newItemsIds = data.map((item) => item._id.toString());
 
     await modifiedItems.forEach(async (item) => {
         await MenuItem.findByIdAndUpdate(item.id, item);
     });
 
-    const items = menu.sections
+    const menuItemsIds = menu.sections
         .map((section) => section.items)
         .flat(1)
         .map((item) => item.id);
-    await Menu.findByIdAndUpdate(today.menu, { $set: { items } });
+    await Menu.findByIdAndUpdate(today.menu, {
+        $set: { items: [...menuItemsIds, ...newItemsIds] },
+    });
 
     return res.status(200).end();
 }
