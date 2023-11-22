@@ -84,9 +84,15 @@ export default function ItemDescription({
             </div>
 
             <div className='text-right px-3 py-4'>
-                <p className='text-xl font-semibold'>{name}</p>
-                <p className='text-[#8b5cf6] font-medium py-2'>{price} ₪</p>
-                <p className='text-gray-500 text-xs'>{description}</p>
+                <p dir='rtl' className='text-xl font-semibold'>
+                    {name}
+                </p>
+                <p className='text-[#8b5cf6] font-medium py-2'>
+                    {price.toFixed(2)} ₪
+                </p>
+                <p dir='rtl' className='text-gray-500 text-sm'>
+                    {description}
+                </p>
             </div>
 
             <div className='flex p-3'>
@@ -119,7 +125,9 @@ export default function ItemDescription({
                     }}
                     className='flex justify-between p-3 w-ful bg-[#8b5cf6] flex-1 rounded-md shadow-lg text-white transition text-sm'
                 >
-                    <p>{quantity > 0 && `${quantity * price} ₪`}</p>
+                    <p>
+                        {quantity > 0 && `${(quantity * price).toFixed(2)} ₪`}
+                    </p>
                     <p className='font-semibold '>
                         {inOrder
                             ? quantity === 0

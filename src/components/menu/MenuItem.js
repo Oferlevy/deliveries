@@ -10,17 +10,22 @@ export default function MenuItem({ name, description, price, image }) {
                         alt={name}
                         priority={true}
                         fill={true}
+                        sizes='32rem'
                         className='object-cover'
                     />
                 </div>
 
                 <div className='flex flex-col flex-1 text-right pl-1 overflow-hidden'>
-                    <p className='text-sm font-semibold py-1'>{name}</p>
-                    <p className='flex-1 text-gray-500 text-xs'>
+                    <p dir='rtl' className='text-sm font-semibold py-1'>
+                        {name}
+                    </p>
+                    <p dir='rtl' className='flex-1 text-gray-500 text-xs'>
                         {description}
                     </p>
                     {price >= 0 && (
-                        <p className='text-[#8b5cf6] text-sm pb-1'>{price} ₪</p>
+                        <p className='text-[#8b5cf6] text-sm pb-1'>
+                            {price.toFixed(2)} ₪
+                        </p>
                     )}
                 </div>
             </div>

@@ -31,10 +31,12 @@ export default async function getMenu() {
 
     const menu = {
         day: today.day,
-        sections: data.sections.map((section) => ({
-            name: section,
-            items: data.items.filter((item) => item.section === section),
-        })),
+        sections: data.sections
+            .map((section) => ({
+                name: section,
+                items: data.items.filter((item) => item.section === section),
+            }))
+            .filter((section) => section.items.length > 0),
     };
 
     return menu;

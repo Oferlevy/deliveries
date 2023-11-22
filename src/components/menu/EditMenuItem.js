@@ -121,7 +121,7 @@ export default function EditMenuItem({
                                 onChange={(event) =>
                                     setNewItem({
                                         ...newItem,
-                                        price: event.target.value,
+                                        price: parseFloat(event.target.value),
                                     })
                                 }
                                 className='border-b-2 flex-1 py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'

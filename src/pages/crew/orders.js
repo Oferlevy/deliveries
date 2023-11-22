@@ -25,7 +25,7 @@ export default function OrdersPage({ orders }) {
                         <p>שם - {order.name}</p>
                         <p className='mb-2'>מספר טלפון - {order.phoneNumber}</p>
 
-                        <p>מחיר - ₪ {order.price}</p>
+                        <p>מחיר - ₪ {order.price.toFixed(2)}</p>
                         <p>שיטת תשלום - {order.paymentMethod}</p>
                         {order.paymentNumber && (
                             <p>מספר - {order.paymentNumber}</p>
@@ -61,7 +61,6 @@ export default function OrdersPage({ orders }) {
 
 export const getServerSideProps = withSsrAuth(async () => {
     const orders = await getOrders();
-    console.log(orders);
 
     return {
         props: { orders },

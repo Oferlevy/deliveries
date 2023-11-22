@@ -10,6 +10,7 @@ export default function CartItem({
     image,
     id,
     quantity,
+    minQuantity = 0,
     maxQuantity,
     halves,
 }) {
@@ -42,27 +43,34 @@ export default function CartItem({
                     src={image}
                     alt={name}
                     fill={true}
+                    sizes='32rem'
                     className='object-cover'
                 />
             </div>
 
             <div className='flex flex-col flex-1 pl-2 overflow-hidden'>
-                <div className='flex flex-col flex-1 justify-between text-right px-2 py-0.5'>
-                    <p className='text-sm font-medium'>{name}</p>
-                    <p className='pb-0.5 text-sm font-light text-gray-600 truncate'>
+                <div className='flex flex-col flex-1 justify-between text-right px-2 pt-0.5'>
+                    <p dir='rtl' className='text-sm font-medium'>
+                        {name}
+                    </p>
+                    <p
+                        dir='rtl'
+                        className='pb-1 text-ms font-light text-gray-500 truncate'
+                    >
                         {description}
                     </p>
                 </div>
 
                 <div className='flex justify-between items-center py-0.5 border-t'>
                     <p className='text-[#8b5cf6] text-sm font-medium'>
-                        {quantity * price} ₪
+                        {(quantity * price).toFixed(2)} ₪
                     </p>
 
                     <div className='flex mt-1 mb-0.5 text-center border rounded-md overflow-hidden h-6 shadow'>
                         <button
+                            disabled={quantity === minQuantity}
                             onClick={() => changeQuantity('subtract')}
-                            className='flex items-center justify-center w-6 bg-gray-200 hover:bg-gray-300 transition'
+                            className='flex items-center justify-center w-6 bg-gray-200 hover:bg-gray-300 disabled:bg-slate-100 transition'
                         >
                             <BiMinus size={14} />
                         </button>

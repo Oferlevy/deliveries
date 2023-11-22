@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     const order = await Order.create({
         name: req.body.name,
         phoneNumber: req.body.phoneNumber,
-        price: cart.price,
+        price: cart.price.toFixed(2),
         paymentMethod: req.body.paymentMethod,
         paymentNumber: req.body.number,
         message: cart.message || undefined,

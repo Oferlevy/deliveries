@@ -96,7 +96,10 @@ export default function PlaceOrder({ isVisible, setCurrentView }) {
                     <input
                         type='hidden'
                         name='cart'
-                        value={JSON.stringify(cart)}
+                        value={JSON.stringify({
+                            ...cart,
+                            items: cart.items.slice(1),
+                        })}
                     />
 
                     <div className='absolute inset-x-3 bottom-3'>
@@ -105,7 +108,7 @@ export default function PlaceOrder({ isVisible, setCurrentView }) {
                             className='flex justify-between bg-[#8b5cf6] w-full
                         py-3 px-4 mt-2 rounded-md shadow-lg text-white transition'
                         >
-                            <p>{cart.price} ₪</p>
+                            <p>{cart.price.toFixed(2)} ₪</p>
                             <p className='font-semibold'>הזמן</p>
                         </button>
                     </div>

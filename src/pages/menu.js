@@ -41,13 +41,13 @@ function MenuPage({ menu }) {
                     ))}
                 </ul>
 
-                {cart.items.length >= 1 && (
+                {cart.items.length > 1 && (
                     <div className='sticky mx-3 bottom-3 rounded-md overflow-hidden'>
                         <button
                             onClick={() => setShowCart(true)}
                             className='flex justify-between py-3 px-4 w-full bg-[#8b5cf6] text-white'
                         >
-                            <p>{price} ₪</p>
+                            <p>{price.toFixed(2)} ₪</p>
                             <p className='font-semibold'>צפה בהזמנה</p>
                         </button>
                     </div>

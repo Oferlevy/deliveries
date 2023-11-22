@@ -14,6 +14,10 @@ const todaySchema = new mongoose.Schema({
     pickupInfo: {
         type: String,
     },
+    isActive: {
+        type: Boolean,
+        required: true,
+    },
     orders: {
         type: [{ type: mongoose.Types.ObjectId, ref: 'Order' }],
         default: [],

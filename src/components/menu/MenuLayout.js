@@ -3,14 +3,18 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 
 export default function MenuLayout({ day, sections, children }) {
     const [shadow, setShadow] = useState(false);
-    const [activeSection, setActiveSection] = useState('');
+    const [activeSection, setActiveSection] = useState({ name: '', offset: 0 });
     const [titleHeight, setTitleHeight] = useState(0);
-    const [navbarHeight, setNavbarHeight] = useState(0);
-    const sectionsRef = useRef(null);
+    const [sectionsListHeight, setSectionsListHeight] = useState(0);
 
-    const handleScroll = () => {
+    const sectionsRef = useRef(null);
+    const sectionsListRef = useRef(null);
+
+    let previousSection = '';
+    const handlePageScroll = () => {
         setShadow(window.scrollY > titleHeight);
-        const scrollY = window.scrollY + navbarHeight;
+        const scrollY = window.scrollY + sectionsListHeight;
+        let currentSection = '';
 
         sectionsRef.current.forEach((section) => {
             const sectionOffsetTop = section.offsetTop;
@@ -19,26 +23,53 @@ export default function MenuLayout({ day, sections, children }) {
             if (
                 scrollY >= sectionOffsetTop &&
                 scrollY < sectionOffsetTop + sectionHeight
-            )
-                setActiveSection(section.id);
+            ) {
+                currentSection = section;
+            }
         });
+
+        if (currentSection && currentSection.id != previousSection) {
+            previousSection = currentSection.id;
+            const sectionButton = document.getElementById(
+                'section-link-' + currentSection.id
+            );
+
+            setActiveSection({
+                name: currentSection.id,
+                offset:
+                    sectionsListRef.current.offsetWidth -
+                    sectionButton.offsetLeft -
+                    sectionButton.offsetWidth,
+            });
+        }
     };
 
     useEffect(() => {
         sectionsRef.current = document.querySelectorAll('section');
+        sectionsListRef.current = document.getElementById('sections-list');
+
         setTitleHeight(document.getElementById('menu-title').offsetHeight);
-        setNavbarHeight(document.getElementById('menu-header').offsetHeight);
+        setSectionsListHeight(
+            document.getElementById('sections-list').offsetHeight
+        );
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('scroll', handlePageScroll);
         };
     }, []);
 
     useEffect(() => {
-        if (!navbarHeight) return;
+        if (!sectionsListHeight) return;
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
-    }, [navbarHeight]);
+        window.addEventListener('scroll', handlePageScroll, { passive: true });
+    }, [sectionsListHeight]);
+
+    useEffect(() => {
+        sectionsListRef.current?.scroll({
+            left: -activeSection.offset,
+            behavior: 'smooth',
+        });
+    }, [activeSection]);
 
     return (
         <div className='flex flex-col'>
@@ -49,29 +80,34 @@ export default function MenuLayout({ day, sections, children }) {
                 תפריט - יום {day}
             </h3>
 
-            <ul
-                id='menu-header'
-                className={`flex flex-row-reverse sticky top-0 z-50 p-3 bg-white ${
+            <div
+                className={`sticky top-0 px-4 z-50 bg-white ${
                     shadow ? 'shadow-lg' : ''
-                } transition-all ease-linear whitespace-nowrap`}
+                } transition-all ease-linear`}
             >
-                {sections.map(({ name }, index) => (
-                    <li key={index} className='inline-block'>
-                        <AnchorLink
-                            id={'section-link-' + name}
-                            href={'#' + name}
-                            offset={navbarHeight}
-                            className={`rounded-full outline-none px-3 py-2 text-ms font-medium ${
-                                name === activeSection
-                                    ? 'hover:bg-[#8b5cf630] bg-[#8b5cf620] text-[#8b5cf6]'
-                                    : 'hover:text-[#8b5cf6]'
-                            }  `}
-                        >
-                            {name}
-                        </AnchorLink>
-                    </li>
-                ))}
-            </ul>
+                <ul
+                    id='sections-list'
+                    dir='rtl'
+                    className='flex overflow-auto pt-2 pb-3'
+                >
+                    {sections.map(({ name }, index) => (
+                        <li key={index}>
+                            <AnchorLink
+                                id={'section-link-' + name}
+                                href={'#' + name}
+                                offset={sectionsListHeight}
+                                className={`rounded-full outline-none px-3 py-2 text-ms font-medium ${
+                                    name === activeSection.name
+                                        ? 'hover:bg-[#8b5cf630] bg-[#8b5cf620] text-[#8b5cf6]'
+                                        : 'hover:text-[#8b5cf6]'
+                                }  `}
+                            >
+                                {name}
+                            </AnchorLink>
+                        </li>
+                    ))}
+                </ul>
+            </div>
 
             {children}
         </div>

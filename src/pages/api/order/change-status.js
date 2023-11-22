@@ -15,7 +15,6 @@ export default async function handler(req, res) {
         });
 
         if (req.body.status === 'מחק') {
-            console.log(order._id);
             await Today.findOneAndUpdate(
                 {},
                 {

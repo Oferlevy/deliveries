@@ -66,8 +66,18 @@ const cartReducer = (state, action) => {
 const CartProvider = ({ children }) => {
     // cart object: { items[], price, message }
     const [cart, dispatch] = useReducer(cartReducer, {
-        items: [],
-        price: 0,
+        items: [
+            {
+                name: 'משלוח',
+                description: 'לא ניתן להסרה',
+                price: 5,
+                quantity: 1,
+                minQuantity: 1,
+                maxQuantity: 1,
+                image: '/images/delivery.webp',
+            },
+        ],
+        price: 5,
         message: '',
     });
 
