@@ -34,12 +34,16 @@ export default function MenuLayout({ day, sections, children }) {
                 'section-link-' + currentSection.id
             );
 
+            // console.log('width1', sectionsListRef.current.offsetWidth);
+            // console.log('left', sectionButton.offsetLeft);
+            // console.log('width2', sectionButton.offsetWidth);
             setActiveSection({
                 name: currentSection.id,
                 offset:
                     sectionsListRef.current.offsetWidth -
                     sectionButton.offsetLeft -
-                    sectionButton.offsetWidth,
+                    sectionButton.offsetWidth +
+                    16,
             });
         }
     };
@@ -65,6 +69,7 @@ export default function MenuLayout({ day, sections, children }) {
     }, [sectionsListHeight]);
 
     useEffect(() => {
+        // console.log(activeSection.offset);
         sectionsListRef.current?.scroll({
             left: -activeSection.offset,
             behavior: 'smooth',
@@ -88,7 +93,7 @@ export default function MenuLayout({ day, sections, children }) {
                 <ul
                     id='sections-list'
                     dir='rtl'
-                    className='flex overflow-auto pt-2 pb-3'
+                    className='flex overflow-auto pt-2 pb-3 bg-green-100'
                 >
                     {sections.map(({ name }, index) => (
                         <li key={index}>
