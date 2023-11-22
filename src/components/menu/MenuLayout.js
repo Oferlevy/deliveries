@@ -93,7 +93,7 @@ export default function MenuLayout({ day, sections, children }) {
                 <ul
                     id='sections-list'
                     dir='rtl'
-                    className='flex overflow-auto pt-2 pb-3 bg-green-100'
+                    className='flex overflow-auto pt-2 pb-3'
                 >
                     {sections.map(({ name }, index) => (
                         <li key={index}>
