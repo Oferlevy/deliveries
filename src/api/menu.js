@@ -4,7 +4,7 @@ import Menu from '@/api/models/menu';
 import Today from '@/api/models/today';
 import MenuItem from '@/api/models/menuItem';
 
-export default async function getMenu() {
+export default async function getMenu(withEmptySections = false) {
     await connectDB();
 
     const today = await Today.findOne().lean();
@@ -36,7 +36,7 @@ export default async function getMenu() {
                 name: section,
                 items: data.items.filter((item) => item.section === section),
             }))
-            .filter((section) => section.items.length > 0),
+            .filter((section) => withEmptySections || section.items.length > 0),
     };
 
     return menu;

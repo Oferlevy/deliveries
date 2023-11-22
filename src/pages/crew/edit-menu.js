@@ -102,7 +102,7 @@ export default function EditMenuPage({ initialMenu, allItems }) {
 }
 
 export const getServerSideProps = withSsrAuth(async () => {
-    const initialMenu = await getMenu();
+    const initialMenu = await getMenu(true);
     const allItems = await getMenuItems();
 
     return {
