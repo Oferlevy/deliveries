@@ -6,8 +6,8 @@ import EditMessage from '@/components/cart/EditMessage';
 import PlaceOrder from '@/components/cart/PlaceOrder';
 
 export default function Cart() {
-    const { dispatch } = useCart();
-    const [message, setMessage] = useState('');
+    const { cart, dispatch } = useCart();
+    const [message, setMessage] = useState(cart.message);
     const [currentView, setCurrentView] = useState('content');
 
     useEffect(() => {
@@ -25,6 +25,7 @@ export default function Cart() {
             />
 
             <EditMessage
+                initialMessage={message}
                 setMessage={setMessage}
                 isVisible={currentView === 'editMessage'}
                 setCurrentView={setCurrentView}

@@ -1,6 +1,11 @@
 import { IoMdArrowBack } from 'react-icons/io';
 
-export default function EditMessage({ setMessage, isVisible, setCurrentView }) {
+export default function EditMessage({
+    initalValue,
+    setMessage,
+    isVisible,
+    setCurrentView,
+}) {
     return (
         <div
             className={`absolute p-4 w-full h-full transition-all ${
@@ -22,6 +27,7 @@ export default function EditMessage({ setMessage, isVisible, setCurrentView }) {
                 <div className='mt-3'>
                     <textarea
                         placeholder='סכו״ם, רטבים, וכו...'
+                        defaultValue={initalValue}
                         rows={4}
                         dir='rtl'
                         onChange={(event) => setMessage(event.target.value)}

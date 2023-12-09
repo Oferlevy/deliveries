@@ -3,6 +3,12 @@ import { createContext, useReducer, useContext } from 'react';
 // state managment via context
 const CartContext = createContext();
 
+// sets the cart (used when data is saved in localStorage)
+const setCart = (newCart, action) => {
+    newCart = action.cart;
+    console.log(action.cart);
+};
+
 // adds item to the cart
 const addItem = (newCart, action) => {
     // finding the index of the item with the correspondong id
@@ -37,9 +43,13 @@ const setQuantity = (newCart, action) => {
 
 // the reducer of the cart
 const cartReducer = (state, action) => {
-    const newCart = { ...state };
+    let newCart = { ...state };
 
     switch (action.type) {
+        case 'setCart':
+            newCart = action.cart;
+            console.log(newCart);
+            break;
         case 'addItem':
             addItem(newCart, action);
             break;

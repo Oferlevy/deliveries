@@ -1,7 +1,9 @@
-// import getTodaysInfo from '@/api/todaysInfo';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 export default function ConfirmationPage() {
+    useEffect(() => localStorage.setItem('cart', null), []);
+
     return (
         <div className='h-full flex flex-col items-center justify-center'>
             <p className='text-xl font-medium mb-2'>!הזמנתך התקבלה בהצלחה</p>
@@ -14,11 +16,3 @@ export default function ConfirmationPage() {
         </div>
     );
 }
-
-// export async function getStaticProps() {
-//     const todaysInfo = await getTodaysInfo();
-
-//     return {
-//         props: { todaysInfo },
-//     };
-// }

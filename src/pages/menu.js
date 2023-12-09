@@ -7,6 +7,7 @@ import Cart from '@/components/cart/Cart';
 import ItemDescription from '@/components/menu/ItemDescription';
 import MenuLayout from '@/components/menu/MenuLayout';
 import { CartProvider, useCart } from '@/contexts/CartContext';
+import { useBeforeunload } from 'react-beforeunload';
 
 export default function ContextWrapper({ menu }) {
     return (
@@ -17,11 +18,23 @@ export default function ContextWrapper({ menu }) {
 }
 
 function MenuPage({ menu }) {
-    const { cart } = useCart();
+    const { cart, dispatch } = useCart();
 
     const [price, setPrice] = useState(0);
     const [showCart, setShowCart] = useState(false);
     const [itemToShow, setItemToShow] = useState(null);
+
+    useBeforeunload(() => {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    });
+
+    useEffect(() => {
+        const currentCart = JSON.parse(localStorage.getItem('cart'));
+
+        if (currentCart) {
+            dispatch({ type: 'setCart', cart: currentCart });
+        }
+    }, []);
 
     useEffect(() => {
         setPrice(cart.price);
